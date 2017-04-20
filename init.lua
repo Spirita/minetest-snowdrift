@@ -7,7 +7,7 @@ local PRECOFF = -0.4 -- Precipitation offset, higher = rains more often
 local GSCYCLE = 0.5 -- Globalstep cycle (seconds)
 local FLAKES = 16 -- Snowflakes per cycle
 local DROPS = 64 -- Raindrops per cycle
-local RAINGAIN = 0.2 -- Rain sound volume
+local RAINGAIN = 1 -- Rain sound volume
 local COLLIDE = false -- Whether particles collide with nodes
 local NISVAL = 39 -- Clouds RGB value at night
 local DASVAL = 175 -- Clouds RGB value in daytime
@@ -64,7 +64,6 @@ local nobj_prec = nil
 
 -- Globalstep function
 
-local handles = {}
 local timer = 0
 
 minetest.register_globalstep(function(dtime)
@@ -74,7 +73,6 @@ minetest.register_globalstep(function(dtime)
 	end
 
 	timer = 0
-
 	for _, player in ipairs(minetest.get_connected_players()) do
 		local player_name = player:get_player_name()
 		local ppos = player:getpos()
@@ -132,6 +130,7 @@ minetest.register_globalstep(function(dtime)
 			end
 
 			local outside_quota = 0
+			local outside_pos = {x=0,y=0,z=0}
 			if precip then
 				-- Precipitation
 				if freeze then
@@ -159,7 +158,8 @@ minetest.register_globalstep(function(dtime)
 								texture = "snowdrift_snowflake" .. math.random(1, 4) .. ".png",
 								playername = player:get_player_name()
 							})
-							outside_quota = outside_quota + 1 / FLAKES
+							outside_quota = outside_quota + 1
+							vector.add(outside_pos, pos)
 						end
 					end
 				else
@@ -187,49 +187,19 @@ minetest.register_globalstep(function(dtime)
 								texture = "snowdrift_raindrop.png",
 								playername = player:get_player_name()
 							})
-							outside_quota = outside_quota + 1 / DROPS
+							outside_quota = outside_quota + 1
+							outside_pos = vector.add(outside_pos, pos)
 						end
 					end
-
-					if not handles[player_name] then
-						-- Start sound if not playing
-						local handle = minetest.sound_play(
+					minetest.sound_play(
 							"snowdrift_rain",
 							{
-								to_player = player_name,
-								gain = RAINGAIN,
-								loop = true,
+								gain = outside_quota / DROPS * RAINGAIN,
+								pos = vector.divide(outside_pos, outside_quota),
 							}
 						)
-						if handle then
-							handles[player_name] = handle
-						end
-					end
 				end
 			end
-			if not precip or freeze or outside_quota < 0.3 then
-				if handles[player_name] then
-					-- Stop sound if playing
-					minetest.sound_stop(handles[player_name])
-					handles[player_name] = nil
-				end
-			end
-
-		elseif handles[player_name] then
-			-- Stop sound when player goes under y limit
-			minetest.sound_stop(handles[player_name])
-			handles[player_name] = nil
 		end
-	end
-end)
-
-
--- Stop sound and remove player handle on leaveplayer
-
-minetest.register_on_leaveplayer(function(player)
-	local player_name = player:get_player_name()
-	if handles[player_name] then
-		minetest.sound_stop(handles[player_name])
-		handles[player_name] = nil
 	end
 end)
