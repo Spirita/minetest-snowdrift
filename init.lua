@@ -8,9 +8,10 @@ local GSCYCLE = 0.5 -- Globalstep cycle (seconds)
 local FLAKES = 16 -- Snowflakes per cycle
 local DROPS = 64 -- Raindrops per cycle
 local RAINGAIN = 0.2 -- Rain sound volume
-local COLLIDE = false -- Whether particles collide with nodes
+local COLLIDE = true -- Whether particles collide with nodes
 local NISVAL = 39 -- Clouds RGB value at night
 local DASVAL = 175 -- Clouds RGB value in daytime
+local OUTHIGH = 15 -- lookup high for outside check
 
 local np_prec = {
 	offset = 0,
@@ -142,7 +143,7 @@ minetest.register_globalstep(function(dtime)
 							y = pposy + 8 + math.random(0, 1),
 							z = pposz - 20 + math.random(0, 47)
 							}
-						if minetest.get_node_light(pos, 0.5) == 15 then
+						if minetest.line_of_sight(pos, {x=pos.x,y=pos.y+OUTHIGH,z=pos.z}) == true then
 							minetest.add_particle({
 								pos = pos,
 								vel = {
@@ -170,7 +171,7 @@ minetest.register_globalstep(function(dtime)
 							y = pposy + 8 + math.random(0, 5),
 							z = pposz - 8 + math.random(0, 16)
 							}
-						if minetest.get_node_light(pos, 0.5) == 15 then
+						if minetest.line_of_sight(pos, {x=pos.x,y=pos.y+OUTHIGH,z=pos.z}) == true then
 							minetest.add_particle({
 								pos = pos,
 								vel = {
