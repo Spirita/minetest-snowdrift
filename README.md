@@ -47,9 +47,26 @@ See license.md
 
 ## 4 Features
 
-- Sometimes it rains !
-- It will be snow if you are in a cold biome.
+- Sometimes it rains, it will be snow if you are in a cold biome.
 - Rain and snow make sound.
+- Chat commands /weather and /setweather that work as in mymonth and the Jeija's mod.
+
+
+
+### Chat commands
+
+
+- Get informations
+
+    /weather
+
+- Force the weather
+
+You need the privs "weather".
+
+    /setweather wantedweather
+
+wantedweather : "rain", "snow", "clear" or "default", default let the function of the weather decide.
 
 
 ## 5 Technique
