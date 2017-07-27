@@ -1,11 +1,14 @@
 
 
 ## v0.7.1
-In progress
+Tested with Minetest 0.4.13 and 0.4.16
+https://github.com/Spirita/snowdrift/releases/tag/v0.7.1
 
 * Technique
- - Fix issue "Sound in multiplayer" of v0.7.0
-
+ - Fix bug with sound in multiplayer introduced in v0.7.0
+ - Code cleaning
+ - Add mod.conf, ReadmeAPI.md for develloper, changelog.md
+ - Minor improvements of existing files (readme, screenshoot, ...)
 
 
 ## v0.7.0
