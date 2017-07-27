@@ -39,7 +39,7 @@ minetest.register_globalstep(function(dtime)
 	
 	-- Main loop
 	for _, player in ipairs(minetest.get_connected_players()) do
-		local player_data = snowdrift.initialize_player_data(player)
+		local player_data = snowdrift.get_player_data(player)
 		
 		player_data.ppos = snowdrift.ppos_for_player(player)
 		player_data.has_changed = false

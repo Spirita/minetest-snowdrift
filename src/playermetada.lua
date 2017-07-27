@@ -9,20 +9,24 @@ snowdrift.players_data = {}
 -- @param player the concerned player
 function snowdrift.initialize_player_data(player)
 	local player_name = player:get_player_name()
-	if not snowdrift.players_data[player_name] then -- TODO if must disapear with on_join
 		snowdrift.players_data[player_name] = {
-			player = player,
-			player_name = player_name,
-			ppos = nil,
-			weather = "clear",
-			bool_quota = false,
-			sound_handle = nil,
-			has_changed = false, -- TODO must disapear with listener
-			listener_weather = {},
-			listener_bool_quota = {}
-		}
-	end
-	return snowdrift.players_data[player_name]
+		player = player,
+		player_name = player_name,
+		ppos = nil,
+		weather = "clear",
+		bool_quota = false,
+		sound_handle = nil,
+		has_changed = false, -- TODO must disapear with listener
+		listener_weather = {},
+		listener_bool_quota = {}
+	}
+end
+
+--- Alias to short the call.
+-- @param player the player to get metadata
+-- @return the metadata of the player
+function snowdrift.get_player_data(player)
+	return snowdrift.players_data[player:get_player_name()]
 end
 
 
@@ -40,7 +44,7 @@ function snowdrift.set_weather(player_data, new_weather)
 end
 
 
---- Setter of the boolean of the quota, trigger the listeners (not yet)
+--- Setter of the boolean of the quota, trigger the listeners
 -- @param player_data metadata to set
 -- @param new_quota raw percent to compare at the quota to set the boolean
 function snowdrift.set_quota(player_data, new_quota)
