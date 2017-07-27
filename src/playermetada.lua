@@ -26,13 +26,15 @@ function snowdrift.initialize_player_data(player)
 end
 
 
---- Setter of weather, trigger the listeners (not yet)
+--- Setter of weather, trigger the listeners
 -- @param player_data metadata to set
 -- @param new_weather weather to set
 function snowdrift.set_weather(player_data, new_weather)
 	if (player_data.weather ~= new_weather) then
 		player_data.has_changed = true
-		-- TODO Call all listener
+		for _, funct in pairs(player_data.listener_weather) do
+			funct (player_data, new_weather)
+		end
 	end
 	player_data.weather = new_weather
 end
@@ -45,14 +47,45 @@ function snowdrift.set_quota(player_data, new_quota)
 	local new_bool_quota = not (new_quota < snowdrift.OUTSIDE_QUOTA)
 	if (player_data.bool_quota ~= new_bool_quota) then
 		player_data.has_changed = true
-		-- TODO Call all listener
+		for _, funct in pairs(player_data.listener_bool_quota) do
+			funct (player_data, new_weather)
+		end
 	end
 	player_data.bool_quota = new_bool_quota
 end
 
 
--- Register
+-- Listener
 -- ========
+
+function snowdrift.register_on_changeweather(player_data, funct, listener_name)
+	player_data.listener_weather[listener_name] = funct
+end
+
+
+function snowdrift.register_on_changeboolquota(player_data, funct, listener_name)
+	player_data.listener_bool_quota[listener_name] = funct
+end
+
+function snowdrift.clear_changeweather(player_data, listener_name)
+	player_data.listener_weather[listener_name] = nil
+end
+
+
+function snowdrift.clear_changeboolquota(player_data, listener_name)
+	player_data.listener_bool_quota[listener_name] = nil
+end
+
+
+
+
+-- Registers
+-- =========
+
+
+-- Initialization on joinplayer
+minetest.register_on_joinplayer(snowdrift.initialize_player_data)
+
 
 -- Cleanning on leaveplayer
 minetest.register_on_leaveplayer(function(player)
