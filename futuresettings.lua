@@ -12,7 +12,7 @@ snowdrift.GSCYCLE = 0.5
 
 -- Set to world's water level or level of lowest open area,
 -- calculations are disabled below this y.
-snowdrift.YLIMIT = 1 
+snowdrift.YLIMIT = -1 -- previous value = 1
 				
 -- Time scale for precipitation variation in minutes
 snowdrift.PRECSPR = 6

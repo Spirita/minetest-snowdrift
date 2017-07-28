@@ -27,27 +27,6 @@ dofile(minetest.get_modpath("snowdrift").."/src/commands.lua")
 -- Globalstep function
 -- ===================
 
---- Main loop that calculate weather for the player
-function snowdrift.main_loop_players()
-	for _, player in ipairs(minetest.get_connected_players()) do
-		local player_data = snowdrift.get_player_data(player)
-		
-		player_data.ppos = snowdrift.round_player_position(player)
-		
-		snowdrift.calcul_weather(player_data)
-		snowdrift.set_sky_brightness(player_data) -- TODO put in listener
-		snowdrift.set_particules(player_data)
-		snowdrift.set_sound_for_particles(player_data) -- TODO put in listener
-		
-		player_data.has_changed = false
-	end
-end
-
-
-function snowdrift.main_loop_others()
-	-- TODO
-end
-
 
 local timer = 0
 
@@ -62,5 +41,29 @@ minetest.register_globalstep(function(dtime)
 	snowdrift.main_loop_others()
 end)
 
+
+-- Function for loop
+-- =================
+
+
+--- Main loop that calculate weather for the player
+function snowdrift.main_loop_players()
+	for _, player in ipairs(minetest.get_connected_players()) do
+		local player_data = snowdrift.get_player_data(player)
+		
+		player_data.ppos = snowdrift.round_player_position(player)
+		
+		snowdrift.calcul_weather(player_data)
+		snowdrift.set_particules(player_data)
+		
+		player_data.has_changed = false
+	end
+end
+
+
+--- Main loop for not players
+function snowdrift.main_loop_others()
+	-- TODO
+end
 
 

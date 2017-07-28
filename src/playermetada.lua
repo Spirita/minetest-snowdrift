@@ -5,6 +5,10 @@
 snowdrift.players_data = {}
 
 
+-- Getter and Setter
+-- =================
+
+
 --- Initialize the table of metadata for the player
 -- @param player the concerned player
 function snowdrift.initialize_player_data(player)
@@ -21,6 +25,26 @@ function snowdrift.initialize_player_data(player)
 		listener_bool_quota = {}
 	}
 end
+
+
+--- Call the initialization of metadata, set the listeners, call a first loop
+-- @param player the concerned player
+function snowdrift.initialize_player(player)
+	-- initialization
+	snowdrift.initialize_player_data(player)
+	-- listener
+	local player_data = snowdrift.get_player_data(player)
+	snowdrift.register_on_changeweather(player_data, snowdrift.set_sound_for_particles, "snowdrift_sound_listener")
+	snowdrift.register_on_changeboolquota(player_data, snowdrift.set_sound_for_particles, "snowdrift_sound_listener")
+	snowdrift.register_on_changeweather(player_data, snowdrift.set_sky_brightness, "snowdrift_sky_listener")
+	-- first loop
+	snowdrift.main_loop_players()
+end
+
+
+-- Getter and Setter
+-- =================
+
 
 --- Alias to short the call.
 -- @param player the player to get metadata
@@ -59,8 +83,9 @@ function snowdrift.set_quota(player_data, new_quota)
 end
 
 
--- Listener
--- ========
+-- Listeners
+-- =========
+
 
 function snowdrift.register_on_changeweather(player_data, funct, listener_name)
 	player_data.listener_weather[listener_name] = funct
@@ -79,8 +104,6 @@ end
 function snowdrift.clear_changeboolquota(player_data, listener_name)
 	player_data.listener_bool_quota[listener_name] = nil
 end
-
-
 
 
 -- Registers
