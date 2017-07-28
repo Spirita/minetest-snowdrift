@@ -18,28 +18,24 @@ function snowdrift.initialize_player_data(player)
 		player_name = player_name,
 		ppos = nil,
 		weather = "clear",
+		is_weather_forced = false, -- TODO new
 		bool_quota = false,
 		sound_handle = nil,
 		has_changed = false, -- TODO must disapear with listener
+		is_particles_activated = true, -- TODO new
+		visual_details_level = snowdrift.VISUALDETAILSINITPLAYER, -- TODO new
 		listener_weather = {},
 		listener_bool_quota = {}
 	}
 end
 
 
---- Call the initialization of metadata, set the listeners, call a first loop
--- @param player the concerned player
-function snowdrift.initialize_player(player)
-	-- initialization
-	snowdrift.initialize_player_data(player)
-	-- listener
-	local player_data = snowdrift.get_player_data(player)
-	snowdrift.register_on_changeweather(player_data, snowdrift.set_sound_for_particles, "snowdrift_sound_listener")
-	snowdrift.register_on_changeboolquota(player_data, snowdrift.set_sound_for_particles, "snowdrift_sound_listener")
-	snowdrift.register_on_changeweather(player_data, snowdrift.set_sky_brightness, "snowdrift_sky_listener")
-	-- first loop
-	snowdrift.main_loop_players()
-end
+snowdrift.visual_details_levels = {
+ none = 0,
+ very_low = 1,
+ low = 2,
+ normal = 3
+}
 
 
 -- Getter and Setter
@@ -104,23 +100,6 @@ end
 function snowdrift.clear_changeboolquota(player_data, listener_name)
 	player_data.listener_bool_quota[listener_name] = nil
 end
-
-
--- Registers
--- =========
-
-
--- Initialization on joinplayer
-minetest.register_on_joinplayer(snowdrift.initialize_player_data)
-
-
--- Cleanning on leaveplayer
-minetest.register_on_leaveplayer(function(player)
-	local player_name = player:get_player_name()
-		snowdrift.stop_sound(snowdrift.players_data[player_name])
-		snowdrift.players_data[player_name] = nil
-	end)
-
 
 
 ---------------------------------

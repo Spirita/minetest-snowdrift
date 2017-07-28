@@ -7,6 +7,16 @@
 snowdrift.GSCYCLE = 0.5
 
 
+-- Performances
+-- ============
+
+-- Level of details of visuals effects used to initialize player if they have no settings (use it to make them stop complain of lag if they don't know to use the chat commands)
+snowdrift.VISUALDETAILSINITPLAYER = 3
+
+-- Level of details of visuals effects maximum allowed on server (use it to limit the charge of the server)
+snowdrift.VISUALDETAILSMAXSERVER = 3
+
+
 -- Frequentcy of precipitation
 -- ===========================
 
