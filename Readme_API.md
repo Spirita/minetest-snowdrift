@@ -31,11 +31,26 @@ For the moment, just take a look in futuresettings.lua.
 - /src/commands.lua : register privilege and chat commands
 
 
-## Functions in ./src/utils.lua
+## ./src/utils.lua
 
 - snowdrift.is_outside(pos) and snowdrift.is_inside(pos)
 
 Test if the pos is outside using ligth at midday (may issue with glass), return true if outside.
+
+
+## ./src/calculation.lua
+
+Default function :
+
+    Biome system: Frozen biomes below heat 35,
+    deserts below line 14 * t - 95 * h = -1496
+    h = (14 * t + 1496) / 95
+    h = 14/95 * t + 1496/95
+    where 14/95 is gradient and 1496/95 is y intersection
+    h - 14/95 t = 1496/95 y intersection
+    so area above line is
+    h - 14/95 t > 1496/95
+
 
 
 ## Description of data
