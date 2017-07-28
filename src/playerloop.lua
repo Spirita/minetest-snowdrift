@@ -1,5 +1,9 @@
+--- snowdrift/src/playermetada.lua
+-- Manage the loop for the players
 
 
+-- Initialization
+-- ==============
 
 
 --- Call the initialization of metadata, set the listeners, call a first loop
@@ -31,5 +35,21 @@ minetest.register_on_leaveplayer(function(player)
 		snowdrift.stop_sound(snowdrift.players_data[player_name])
 		snowdrift.players_data[player_name] = nil
 	end)
+
+
+-- Loop
+-- ====
+
+
+--- Main loop that calculate weather for the player
+function snowdrift.main_loop_players()
+	for _, player in ipairs(minetest.get_connected_players()) do
+		local player_data = snowdrift.get_player_data(player)
+		player_data.ppos = snowdrift.round_player_position(player) -- TODO listener of position
+		snowdrift.calcul_weather(player_data)
+		snowdrift.set_particules(player_data)
+		player_data.has_changed = false
+	end
+end
 
 
