@@ -38,6 +38,19 @@ For the moment, just take a look in futuresettings.lua.
 Test if the pos is outside using ligth at midday (may issue with glass), return true if outside.
 
 
+## ./src/playermetada.lua
+
+- snowdrift.get_player_data(player)
+
+- snowdrift.set_weather(player_data, new_weather)
+- snowdrift.set_quota(player_data, new_quota)
+
+- snowdrift.register_on_changeweather(player_data, funct, listener_name)
+- snowdrift.register_on_changeboolquota(player_data, funct, listener_name)
+- snowdrift.clear_changeweather(player_data, listener_name)
+- snowdrift.clear_changeboolquota(player_data, listener_name)
+
+
 ## ./src/calculation.lua
 
 Default function :
