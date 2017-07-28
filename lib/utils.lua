@@ -21,3 +21,12 @@ function snowdrift.is_inside(pos)
 end
 
 
+-- Calculate position
+
+--- Round the player position.
+-- @param player player to calculate the position
+-- @return a table with a value for x, y and z.
+function snowdrift.round_player_position(player)
+	return vector.round(player:getpos())
+end
+

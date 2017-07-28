@@ -102,21 +102,6 @@ minetest.register_on_leaveplayer(function(player)
 
 ---------------------------------
 
--- Function to calculate position
--- ==============================
-
---- Calculate the position to use for the given player.
--- @param player player to calculate the position
--- @return a table with a value for x, y and z.
-function snowdrift.ppos_for_player(player)
-	local ppos = player:getpos()
-	local pposy = math.floor(ppos.y) + 2 -- Precipitation when swimming
-	local pposx = math.floor(ppos.x)
-	local pposz = math.floor(ppos.z)
-	return {x = pposx, y = pposy, z = pposz} -- round ?
-end
-
-
 
 -- Global variables -- TODO be a metadata for each player
 -- ================
