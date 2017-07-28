@@ -5,8 +5,8 @@
 snowdrift.players_data = {}
 
 
--- Getter and Setter
--- =================
+-- Initialization
+-- ==============
 
 
 --- Initialize the table of metadata for the player
@@ -100,32 +100,4 @@ end
 function snowdrift.clear_changeboolquota(player_data, listener_name)
 	player_data.listener_bool_quota[listener_name] = nil
 end
-
-
----------------------------------
-
-
--- Global variables -- TODO be a metadata for each player
--- ================
-
---- force_weather is a a string representing a weather or the string "default".
--- "default" let the calculations decide of the wheather.
--- "rain", "snow" or "clear" escape calculations and are applyed for every player without checking theirs environnements.
--- Not persistent when server is reboot.
-snowdrift.force_weather = "default"
-
-
--- Getter and setter
-
-function snowdrift.get_force_weather()
-	return snowdrift.force_weather
-end
-
-
---- Force the weather to be weather or unforce a forced weather.
--- @param weather <rain|snow|clear|default>, default unforce a weather
-function snowdrift.set_force_weather(weather)
-	snowdrift.force_weather = weather
-end
-
 
