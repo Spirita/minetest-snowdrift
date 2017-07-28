@@ -1,5 +1,5 @@
 --- snowdrift/src/playermetada.lua
--- Metadata about the player
+-- Metadata of the player
 
 
 snowdrift.players_data = {}

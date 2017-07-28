@@ -1,15 +1,16 @@
 --- snowdrift/src/definitions.lua
--- Define tables of data for snowdrift
+-- Metada of the weather
 
 
--- For sky brightness
--- ==================
+
+-- Sky brightness
+-- ==============
 
 snowdrift.difsval = snowdrift.DASVAL - snowdrift.NISVAL
 
 
--- For sky particles
--- =================
+-- Sky particles
+-- =============
 
 
 -- TODO These functions should be replaced by a analysis of folder (or a convention like snowdrift_snowflake.X.png if it work with textures)
@@ -30,10 +31,7 @@ local raintexture_table = function ()
 end
 
 
---- Stock data of particules.
-snowdrift.particles_data = {}
-
-snowdrift.particles_data.rain = {
+local particles_data_rain = {
 	base_number = snowdrift.DROPS,
 	min_box = {x = -8, y = 8, z = -8},
 	random_vector = {x = 16, y = 5, z = 16},
@@ -44,7 +42,7 @@ snowdrift.particles_data.rain = {
 	texture = raintexture_table()
 }
 
-snowdrift.particles_data.snow = {
+local particles_data_snow = {
 	base_number = snowdrift.FLAKES,
 	min_box = {x = -24, y = 8, z = -20},
 	random_vector = {x = 47, y = 1, z = 47},
@@ -55,23 +53,49 @@ snowdrift.particles_data.snow = {
 	texture = snowtexture_table()
 }
 
-snowdrift.particles_data.clear = nil
+local particles_data_clear = nil
 
 
--- For sounds
--- ==========
 
--- Constants here because will probably become variables
+-- Metadata
+-- ========
 
  -- Sound volume
 local RAINGAIN = 0.2
 local SNOWGAIN = 0.2
 
 
---- Stock data of sounds.
-snowdrift.sounds_data = {}
+snowdrift.weathers_data = {}
 
-snowdrift.sounds_data.rain = {song = "snowdrift_rain", base_gain = RAINGAIN}
-snowdrift.sounds_data.snow = {song = "cobratronik_wind_artic_cold", base_gain = SNOWGAIN}
-snowdrift.sounds_data.clear = nil
+
+snowdrift.weathers_data.rain = {
+	weather_name = "rain"
+	particles_data = particles_data_rain
+	sounds_data = {song = "snowdrift_rain", base_gain = RAINGAIN}
+	skybrightness_data =
+}
+
+snowdrift.weathers_data.snow = {
+	weather_name = "snow"
+	particles_data = particles_data_snow
+	sounds_data = {song = "cobratronik_wind_artic_cold", base_gain = SNOWGAIN}
+	skybrightness_data =
+}
+
+snowdrift.weathers_data.clear = {
+	weather_name = "clear"
+	particles_data = particles_data_clear
+	sounds_data = nil
+	skybrightness_data =
+}
+
+
+function snowdrift.register_weather(weather_data, name_for_index)
+	snowdrift.weathers_data[name_for_index] = weather_data
+end
+
+
+function snowdrift.clear_weather(name_for_index)
+	snowdrift.weathers_data[name_for_index] = nil
+end
 
