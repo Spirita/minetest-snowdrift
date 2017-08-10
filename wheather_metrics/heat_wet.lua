@@ -8,3 +8,6 @@
 		local nval_humid = nobj_humid:get2d({x = ppos.x, y = ppos.z})
 		local nval_prec = nobj_prec:get2d({x = os.clock() / 60, y = 0})
 
+
+
+

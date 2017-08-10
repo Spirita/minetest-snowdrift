@@ -1,4 +1,4 @@
---- snowdrift/src/init.lua
+--- snowdrift/init.lua
 -- Main file of the mod snowdrift.
 -- Include other file and launch the main loop.
 
